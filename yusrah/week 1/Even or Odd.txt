@@ -1,0 +1,13 @@
+#include<stdio.h>
+int main(){
+	int val;
+	printf("Enter the number\n");
+	scanf("%d",&val);
+	if(val%2==0){
+		printf("It is an even number");
+	}
+	else{
+		printf("It is an odd number");
+	}
+	return 0;
+}
