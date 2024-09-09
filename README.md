@@ -1,1 +1,1 @@
-# These are some basic codes of c, DSA, OpenMP and Java.
+# These are some basic codes of C, DSA, OpenMP and Java.
