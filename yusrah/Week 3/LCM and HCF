@@ -12,7 +12,6 @@ int main()
 		   	hcf = i;
 		  }
 	 }
-	 /* Finding LCM */
 	 lcm = (num1 * num2)/hcf;
 	 printf("HCF = %d and LCM = %d", hcf, lcm);
 	 return 0;
