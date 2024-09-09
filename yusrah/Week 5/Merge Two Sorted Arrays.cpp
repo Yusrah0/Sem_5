@@ -10,16 +10,16 @@ int main(){
 	scanf("%d",&arr1[i]);
 }
 	printf("Enter the sorted values of array 2\t");
-	for(int i=0;i<n;i++){
-	scanf("%d",arr2[i]);
+	for(int i=0;i<m;i++){
+	scanf("%d",&arr2[i]);
 }
 while(n>0||m>0){
-if(arr1[n]>arr2[m]){
-	res[k]=arr1[n];
+if(arr1[n-1]>arr2[m-1]){
+	res[k]=arr1[n-1];
 	n--;
 }
 else{
-	res[k]=arr2[m];
+	res[k]=arr2[m-1];
 	m--;
 }
 k++;
