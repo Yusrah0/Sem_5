@@ -13,19 +13,20 @@ int main(){
 	for(int i=0;i<m;i++){
 	scanf("%d",&arr2[i]);
 }
-while(n>0||m>0){
-if(arr1[n-1]>arr2[m-1]){
-	res[k]=arr1[n-1];
+n=n-1;m=m-1;
+while(n>=0 || m>=0){
+if(arr1[n]>arr2[m]){
+	res[k]=arr1[n];
 	n--;
 }
 else{
-	res[k]=arr2[m-1];
+	res[k]=arr2[m];
 	m--;
 }
 k++;
 	}
 	printf("The merged array is: \n");
-	for(int a=0;a<k;a++){
+	for(int a=k-1;a>=0;a--){
 		printf("%d  ",res[a]);
 	}
 }
