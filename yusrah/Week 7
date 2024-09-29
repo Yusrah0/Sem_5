@@ -53,3 +53,46 @@ int value=max(n,a);
 printf("2nd largest element in an array is %d",value);
     return 0;
 }
+or
+#include<stdio.h>
+#include<stdlib.h>
+int main(){
+	int ps[20][7];
+	float avgtat=0,avgwt=0;
+	int n;
+	//0=process num,1=arrival time,2=burst size,3=priority,4=completion time,5=tat,6=wt
+	printf("Enter the number of processor\n");
+	scanf("%d",&n);
+		printf("Enter the process number,arrival time, burst time and priority \n");
+	for(int i=0;i<n;i++){
+   scanf("%d %d %d %d",&ps[i][0],&ps[i][1],&ps[i][2],&ps[i][3]);
+	}
+	for(int i=1;i<n;i++){
+	    for(int j=i+1;j<n;j++){
+			if(ps[i][3]<ps[j][3]){
+			    for(int k=0;k<4;k++){
+				int temp=ps[i][k];
+				ps[i][k]=ps[j][k];
+				ps[j][k]=temp;
+			}
+		}
+	} 
+	}
+	ps[0][5]=ps[0][2];
+	ps[0][4]=ps[0][2];
+	ps[0][6]=0;//First process
+		avgtat=ps[0][2];
+for(int i=1;i<n;i++){
+   	ps[i][4]=ps[i-1][4]+ps[i][2];//completion time
+   	ps[i][5]=ps[i][4]-ps[i][1];//turnaround time
+   	avgtat+=ps[i][5];
+   	ps[i][6]=ps[i][5]-ps[i][2];//waiting time
+   	avgwt+=ps[i][6];
+ 
+   }
+		 for(int i=0;i<n;i++){
+   	printf("P%d\t %d\t %d\t %d\t %d\t %d\t %d\n",ps[i][0],ps[i][1],ps[i][2],ps[i][3],ps[i][4],ps[i][5],ps[i][6]);
+	}
+	  printf("Average of Turnaround time is %f\n", avgtat/=n);
+printf("Average of Waiting time is %f\n",avgwt/=n);
+}
