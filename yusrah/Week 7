@@ -96,3 +96,82 @@ for(int i=1;i<n;i++){
 	  printf("Average of Turnaround time is %f\n", avgtat/=n);
 printf("Average of Waiting time is %f\n",avgwt/=n);
 }
+or
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int rr[20][6], ready[15], bt[10];
+    float avgtat = 0, avgwt = 0;
+    int n, tq, i = 0, ind = 0, time = 0, tct = 0, proc = 0, d = 0;
+
+    // 0 = process num, 1 = arrival time, 2 = burst size, 3 = completion time, 4 = tat, 5 = wt
+    printf("Enter the number of processes\n");
+    scanf("%d", &n);
+    printf("Enter the time quantum\n");
+    scanf("%d", &tq);
+    printf("Enter the process number, arrival time and burst time \n");
+    
+    for (int w = 0; w < n; w++) {
+        scanf("%d %d %d", &rr[w][0], &rr[w][1], &rr[w][2]);
+    }
+
+    for (int w = 0; w < n; w++) {
+        tct += rr[w][2];
+        bt[w] = rr[w][2];
+    }
+
+    ready[ind++] = rr[0][0];
+
+    while (i < tct) {
+        for (int j = 0; j < n; j++) {
+            if (proc < ind && ready[proc] == rr[j][0]) {
+                if (bt[j] > tq) {
+                    bt[j] -= tq;
+                    time = i + tq;
+                    for (int f = i + 1; f <= time; f++) {
+                        for (d = 0; d < n; d++) {
+                            if (f == rr[d][1]) {
+                                ready[ind++] = rr[d][0];
+                            }
+                        }
+                    }
+                    ready[ind++] = rr[j][0];
+                    i += tq;
+                } else if (bt[j] > 0) {
+                    rr[j][3] = i + bt[j];
+                    time = i + bt[j];
+                    for (int f = i + 1; f <= time; f++) {
+                        for (d = 0; d < n; d++) {
+                            if (f == rr[d][1]) {
+                                ready[ind++] = rr[d][0];
+                            }
+                        }
+                    }
+                    i += bt[j];
+                    bt[j] = 0;
+                }
+            }
+        }
+        proc++;
+        if (proc >= ind) proc = 0;
+    }
+   rr[0][4] = rr[0][3];
+   avgtat=rr[0][3];
+           rr[0][5] = rr[0][4] - rr[0][2]; 
+           avgwt=rr[0][5];
+    for (int a = 1; a < n; a++) {
+        rr[a][4] = rr[a][3] - rr[a][1]; // Turnaround time
+        avgtat += rr[a][4];
+        rr[a][5] = rr[a][4] - rr[a][2]; // Waiting time
+        avgwt += rr[a][5];
+    }
+
+    for (int w = 0; w < n; w++) {
+        printf("P%d\t %d\t %d\t %d\t %d\t %d\n", rr[w][0], rr[w][1], rr[w][2], rr[w][3], rr[w][4], rr[w][5]);
+    }
+
+    printf("Average Turnaround Time: %f\n", avgtat / n);
+    printf("Average Waiting Time: %f\n", avgwt / n);
+
+    return 0;
