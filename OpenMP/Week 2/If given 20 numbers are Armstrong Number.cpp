@@ -7,7 +7,7 @@ printf("Enter 20 three digit number to check Armstrong number\n");
 for(int i=0;i<20;i++){
 	scanf("%d",&arr[i]);
 }
-#pragma omp for private(num,rem,sum)
+#pragma omp parallel for private(num,rem,sum)
 for(int i=0;i<20;i++){
 	tid=omp_get_thread_num();
 	 num=arr[i];
