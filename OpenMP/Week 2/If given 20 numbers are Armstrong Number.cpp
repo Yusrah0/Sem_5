@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
+#include <math.h>
 int main(int argc, char *argv[]) {
 	int arr[20],sum=0,num,rem,tid;
 printf("Enter 20 three digit number to check Armstrong number\n");
+//if digit isn't given then we use
+//int size=log10(n)+1
 for(int i=0;i<20;i++){
 	scanf("%d",&arr[i]);
 }
