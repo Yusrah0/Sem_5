@@ -10,7 +10,7 @@ int main() {
     {
         int thread_id = omp_get_thread_num();
         #pragma omp for schedule(dynamic)
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 20; i++) {
             if (rand() % 4 == thread_id) {
                 printf("Thread %d: Hello World!\n", thread_id);
             }
