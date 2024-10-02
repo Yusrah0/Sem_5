@@ -9,7 +9,8 @@ int main() {
     #pragma omp parallel num_threads(4)
     {
         int thread_id = omp_get_thread_num();
-        for (i = 0; i < 100; i++) {
+        #pragma omp for schedule(dynamic)
+        for (i = 0; i < 10; i++) {
             if (rand() % 4 == thread_id) {
                 printf("Thread %d: Hello World!\n", thread_id);
             }
