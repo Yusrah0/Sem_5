@@ -5,8 +5,8 @@ int main() {
     int i;
     #pragma omp parallel private(i)
     {
-        int tid = omp_get_thread_num();
-        int n=rand_r(&tid);
+        unsigned int tid = omp_get_thread_num();
+        int n=rand_r(&tid)%10;
         for (i = 0; i < n; i++) {
                 printf("Thread %d: Hello World! from iteration %d \n", tid,i);
             }
