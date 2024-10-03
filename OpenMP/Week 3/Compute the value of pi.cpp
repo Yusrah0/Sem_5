@@ -7,7 +7,6 @@ int main(int argc, char *argv[]) {
 	#pragma omp parallel 
 	{
 		int local=0;
-		unsigned int seed=omp_get_thread_num();
 	#pragma omp for
 	for(i=0;i<num;i++){
 	double x=(double)rand()/RAND_MAX;
