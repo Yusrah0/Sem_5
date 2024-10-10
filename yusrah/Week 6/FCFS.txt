@@ -77,7 +77,7 @@ int main() {
     fcfs(queue,n,&q);
     //display
     for (int i = 0; i < n; i++) {
-        printf("P%d\t\t%d\t\t%d\t\t%d\t\t%d\n", queue[i].id, queue[i].bursttime, queue[i].arrivaltime,queue[i].completiontime,queue[i].turnaroundtime, queue[i].waitingtime);
+        printf("P%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n", queue[i].id, queue[i].bursttime, queue[i].arrivaltime,queue[i].completiontime,queue[i].turnaroundtime, queue[i].waitingtime);
     }
     return 0;
 }
