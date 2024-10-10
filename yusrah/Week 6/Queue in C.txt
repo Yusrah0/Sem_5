@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include<stdbool.h>
+#define MAX 10
+typedef struct{
+   int arr[MAX];
+   int front,rear;
+}Queue;
+void initialize(Queue* q){
+    q->front = -1;
+    q->rear = 0;
+}
+bool isfull(Queue* q){
+    return (q->rear==MAX);
+}
+bool isempty(Queue* q){
+    return (q->front==q->rear-1);
+}
+void enqueue(Queue* q,int val){
+    if(isfull(q)){
+        printf("Queue is full\n");
+        return;
+    }
+    q->arr[q->rear]=val;
+    q->rear++;
+}
+void dequeue(Queue* q){
+    if(isempty(q)){
+        printf("Queue is empty");
+        return;
+    }
+    q->front++;
+}
+int peek(Queue* q){
+    if(isempty(q)){
+        printf("Queue is empty");
+        return -1;
+    }
+    return q->arr[q->front+1];
+}
+void display(Queue* q){
+   if(isempty(q)){
+        printf("Queue is empty");
+        return;
+    }
+ for(int i=q->front+1;i<q->rear;i++){
+     printf("%d ",q->arr[i]);
+ }
+ printf("\n");
+}
+int main() {
+  Queue q;
+  initialize(&q);
+   enqueue(&q, 10);
+ enqueue(&q, 4);
+  enqueue(&q, 6);
+   enqueue(&q, 20);
+   display(&q);
+    dequeue(&q);
+     printf("Front element after dequeue: %d\n", peek(&q));
+    return 0;
+}
