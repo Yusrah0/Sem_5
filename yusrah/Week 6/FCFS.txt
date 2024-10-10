@@ -51,9 +51,9 @@ void fcfs(Process queue[],int n,Queue* q){
             time=current.arrivaltime;
         }
        queue[current.id-1].completiontime=time+current.bursttime;
-       queue[current.id-1].turnaroundtime=current.completiontime-current.arrivaltime;
+       queue[current.id-1].turnaroundtime=time+current.bursttime-current.arrivaltime;
         atat+= current.turnaroundtime;
-         queue[current.id-1].waitingtime=current.turnaroundtime-current.bursttime;
+         queue[current.id-1].waitingtime=time-current.arrivaltime;
          awt+=current.waitingtime;
          time+=current.bursttime;
     }
