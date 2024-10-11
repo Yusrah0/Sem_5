@@ -1,1 +1,12 @@
-
+#!/bin/bash
+read -p "Enter the length of rectangle: " len
+read -p "Enter the breadth of rectangle: " bre
+read -p "Enter the radius of circle: " rad
+arear=$(echo "$len * $bre" | bc)
+per=$(echo "($len + $bre) * 2" | bc)
+areac=$(echo "3.14 * rad * $rad" | bc)
+perc=$(echo "2 * 3.14 * $rad" | bc)
+echo "Area of circle is $areac"
+echo "Perimeter of circle is $perc"
+echo "Area  of rectangle is $arear"
+echo "Perimeter of rectangle is $per"
