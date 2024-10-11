@@ -1,1 +1,10 @@
-
+#!/bin/bash
+read -p "Enter the distance between two points: " dist
+meter=$(echo "$dist * 1000" | bc)
+feet=$(echo "$dist * 3280.84" | bc)
+centimeter=$(echo "$dist * 100000" | bc)
+inches=$(echo "$dist * 39370.1" | bc)
+echo "Meter: $meter"
+echo "Centimeter: $centimeter"
+echo "Feet: $feet"
+echo "Inches: $inches"
