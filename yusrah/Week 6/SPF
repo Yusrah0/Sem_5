@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-
 #define MAX 50
-
 typedef struct {
     int id;
     int arrivaltime;
@@ -12,25 +10,20 @@ typedef struct {
     int turnaroundtime;
     int waitingtime;
 } Process;
-
 typedef struct {
     Process queue[MAX];
     int front, rear;
 } Queue;
-
 void initialize(Queue* q) {
     q->front = -1;
     q->rear = 0;
 }
-
 bool isfull(Queue* q) {
     return (q->rear == MAX);
 }
-
 bool isempty(Queue* q) {
     return (q->front == -1 || q->front >= q->rear);
 }
-
 void enqueue(Queue* q, Process p) {
     if (isfull(q)) {
         printf("Queue is full\n");
@@ -42,7 +35,6 @@ void enqueue(Queue* q, Process p) {
         q->front = 0;
     }
 }
-
 Process dequeue(Queue* q) {
     if (isempty(q)) {
         printf("Queue is empty");
@@ -50,7 +42,6 @@ Process dequeue(Queue* q) {
     }
     return q->queue[q->front++];
 }
-
 void sortProcesses(Process queue[], int n, int time) {
     for (int i = 0; i < n - 1; i++) {
         for (int j = i + 1; j < n; j++) {
@@ -63,19 +54,15 @@ void sortProcesses(Process queue[], int n, int time) {
         }
     }
 }
-
 void spf(Process queue[], int n) {
     float awt = 0, atat = 0;
     int time = 0;
     int completed = 0;
     bool finished[MAX] = {false};
-
     while (completed < n) {
         // Sort processes based on burst time and arrival time
         sortProcesses(queue, n, time);
-
         int idx = -1;
-
         // Find the next process to execute
         for (int i = 0; i < n; i++) {
             if (!finished[i] && queue[i].arrivaltime <= time) {
@@ -83,7 +70,6 @@ void spf(Process queue[], int n) {
                 break;
             }
         }
-
         if (idx != -1) {
             // Execute the selected process
             Process current = queue[idx];
@@ -91,10 +77,8 @@ void spf(Process queue[], int n) {
             current.completiontime = time;
             current.turnaroundtime = current.completiontime - current.arrivaltime;
             current.waitingtime = current.turnaroundtime - current.bursttime;
-
             awt += current.waitingtime;
             atat += current.turnaroundtime;
-
             queue[idx] = current; // Update the original queue
             finished[idx] = true;  // Mark as finished
             completed++;
@@ -103,17 +87,14 @@ void spf(Process queue[], int n) {
             time++;
         }
     }
-
     printf("Average Waiting Time: %.2f\n", awt / n);
     printf("Average Turnaround Time: %.2f\n", atat / n);
 }
-
 int main() {
     int n;
     printf("Enter number of processes: ");
     scanf("%d", &n);
     Process queue[n];
-
     for (int i = 0; i < n; i++) {
         printf("Enter burst time and arrival time for Process %d: ", i + 1);
         queue[i].id = i + 1;
@@ -122,9 +103,7 @@ int main() {
         queue[i].turnaroundtime = 0;
         queue[i].waitingtime = 0;
     }
-
     spf(queue, n);
-
     // Display results
     printf("Process ID\tBurst Time\tArrival Time\tCompletion Time\tTurnaround Time\tWaiting Time\n");
     for (int i = 0; i < n; i++) {
@@ -136,6 +115,5 @@ int main() {
             queue[i].turnaroundtime, 
             queue[i].waitingtime);
     }
-
     return 0;
 }
