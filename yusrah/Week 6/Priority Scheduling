@@ -1,3 +1,4 @@
+//Non-Preemptive
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -103,4 +104,98 @@ int main() {
     }
     return 0;
 }
+//Preemptive
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <limits.h>
+#define MAX 50
 
+typedef struct {
+    int id;
+    int arrivaltime;
+    int bursttime;
+    int remainingtime; // Remaining burst time
+    int completiontime;
+    int turnaroundtime;
+    int waitingtime;
+    int priority;
+} Process;
+
+void preemptivePriorityScheduling(Process queue[], int n) {
+    float awt = 0, atat = 0;
+    int time = 0;
+    bool finished[MAX] = {false};
+    int completed = 0;
+
+    while (completed < n) {
+        int idx = -1;
+        int highestPriority = -1;
+
+        // Find the process with the highest priority that has arrived and is not finished
+        for (int j = 0; j < n; j++) {
+            if (!finished[j] && queue[j].arrivaltime <= time && queue[j].remainingtime > 0) {
+                if (queue[j].priority > highestPriority) {
+                    highestPriority = queue[j].priority;
+                    idx = j;
+                }
+            }
+        }
+
+        if (idx != -1) {
+            // Execute the highest priority process
+            queue[idx].remainingtime--;
+            time++;
+
+            // Check if the process is completed
+            if (queue[idx].remainingtime == 0) {
+                finished[idx] = true;
+                completed++;
+
+                // Calculate completion, turnaround, and waiting times
+                queue[idx].completiontime = time;
+                queue[idx].turnaroundtime = queue[idx].completiontime - queue[idx].arrivaltime;
+                queue[idx].waitingtime = queue[idx].turnaroundtime - queue[idx].bursttime;
+
+                awt += queue[idx].waitingtime;
+                atat += queue[idx].turnaroundtime;
+            }
+        } else {
+            // If no process is ready to execute, increment time
+            time++;
+        }
+    }
+
+    printf("Average Waiting Time: %.2f\n", awt / n);
+    printf("Average Turnaround Time: %.2f\n", atat / n);
+}
+
+int main() {
+    int n;
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+    Process queue[n];
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter burst time, arrival time, priority for Process %d: ", i + 1);
+        queue[i].id = i + 1;
+        scanf("%d %d %d", &queue[i].bursttime, &queue[i].arrivaltime, &queue[i].priority);
+        queue[i].remainingtime = queue[i].bursttime; // Initialize remaining time
+        queue[i].completiontime = 0;
+        queue[i].turnaroundtime = 0;
+        queue[i].waitingtime = 0;
+    }
+    preemptivePriorityScheduling(queue, n);
+    // Display results
+    printf("Process ID\tBurst Time\tArrival Time\tCompletion Time\tTurnaround Time\tWaiting Time\n");
+    for (int i = 0; i < n; i++) {
+        printf("P%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n", 
+            queue[i].id, 
+            queue[i].bursttime, 
+            queue[i].arrivaltime,
+            queue[i].completiontime,
+            queue[i].turnaroundtime, 
+            queue[i].waitingtime);
+    }
+    return 0;
+}
